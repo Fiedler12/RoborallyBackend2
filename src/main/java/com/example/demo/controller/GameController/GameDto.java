@@ -10,6 +10,9 @@ import java.util.List;
 
 public class GameDto {
     int id;
+
+    String name;
+
     public List<PlayerDto> players = new ArrayList<PlayerDto>();
 
     public int getId() {
@@ -26,5 +29,13 @@ public class GameDto {
 
     public void setPlayers(ArrayList<PlayerDto> players) {
         this.players = players;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
