@@ -2,26 +2,29 @@ package com.example.demo.controller.GameController;
 
 import com.example.demo.dal.implementations.GameDao;
 import com.example.demo.model.Board;
+import com.example.demo.model.Player;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class GameDto {
-    private Collection<Board> games;
-    private int numberOfGames;
+    int id;
+    public List<PlayerDto> players = new ArrayList<PlayerDto>();
 
-    public Collection<Board> getGames() {
-        return games;
+    public int getId() {
+        return id;
     }
 
-    public void setGames(Collection<Board> games) {
-        this.games = games;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getNumberOfGames() {
-        return numberOfGames;
+    public ArrayList<PlayerDto> getPlayers() {
+        return (ArrayList<PlayerDto>) players;
     }
 
-    public void setNumberOfGames(int numberOfGames) {
-        this.numberOfGames = numberOfGames;
+    public void setPlayers(ArrayList<PlayerDto> players) {
+        this.players = players;
     }
 }

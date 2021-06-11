@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 public class GameController {
     private final IGameService gameService;
     private final IDtoMapper dtoMapper;
@@ -121,17 +121,16 @@ public class GameController {
     }
 
     @GetMapping("/games")
-    public ResponseEntity<ArrayList<BoardDto>> getGames() throws ServiceException, DaoException {
-        ArrayList<Board> boards = new ArrayList<>();
-        boards.addAll(gameService.getGames());
-        ArrayList<BoardDto> boardDtos = new ArrayList<>();
+    public ResponseEntity<ArrayList<GameDto>> getGames() throws ServiceException, DaoException, MappingException {
+        ArrayList<Board> boards = new ArrayList<>(gameService.getGames());
+        ArrayList<GameDto> gameDtos = new ArrayList<>();
         for (int i = 0; i < boards.size(); i++) {
             try {
-                boardDtos.add(dtoMapper.convertToDto(boards.get(i)));
+                gameDtos.add(dtoMapper.convertToGameDto(boards.get(i)));
             } catch (MappingException e) {
                 e.printStackTrace();
             }
         }
-        return new ResponseEntity<>(boardDtos, HttpStatus.OK);
+        return new ResponseEntity<>(gameDtos, HttpStatus.OK);
     }
 }

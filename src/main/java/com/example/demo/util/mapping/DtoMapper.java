@@ -1,6 +1,7 @@
 package com.example.demo.util.mapping;
 
 import com.example.demo.controller.GameController.BoardDto;
+import com.example.demo.controller.GameController.GameDto;
 import com.example.demo.controller.GameController.PlayerDto;
 import com.example.demo.controller.GameController.SpaceDto;
 import com.example.demo.exceptions.MappingException;
@@ -8,6 +9,8 @@ import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.model.Space;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class DtoMapper implements IDtoMapper {
@@ -74,6 +77,18 @@ public class DtoMapper implements IDtoMapper {
             spaceDto.setPlayerId(space.getPlayer().getPlayerId());
         }
         return spaceDto;
+    }
+
+    public GameDto convertToGameDto(Board board) throws MappingException {
+        if (board == null) {
+            throw new MappingException("Board was null");
+        }
+        GameDto gameDto = new GameDto();
+        gameDto.setId(board.getGameId());
+        for (int i = 0; i < board.getPlayersNumber(); i++) {
+            gameDto.players.add(convertToDto(board.getPlayer(i)));
+        }
+        return gameDto;
     }
 
     public Board convertToEntity(BoardDto boardDto) {

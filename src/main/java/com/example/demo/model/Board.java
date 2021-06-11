@@ -44,7 +44,7 @@ public class Board {
     private Integer gameId;
     private final Space[][] spaces;
 
-    private final List<Player> players = new ArrayList<Player>();
+    public final List<Player> players = new ArrayList<Player>();
     private Player current;
 
     private Phase phase = INITIALISATION;
