@@ -120,17 +120,4 @@ public class GameController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/games")
-    public ResponseEntity<ArrayList<GameDto>> getGames() throws ServiceException, DaoException, MappingException {
-        ArrayList<Board> boards = new ArrayList<>(gameService.getGames());
-        ArrayList<GameDto> gameDtos = new ArrayList<>();
-        for (int i = 0; i < boards.size(); i++) {
-            try {
-                gameDtos.add(dtoMapper.convertToGameDto(boards.get(i)));
-            } catch (MappingException e) {
-                e.printStackTrace();
-            }
-        }
-        return new ResponseEntity<>(gameDtos, HttpStatus.OK);
-    }
 }

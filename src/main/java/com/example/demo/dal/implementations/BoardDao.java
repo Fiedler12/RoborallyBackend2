@@ -4,7 +4,9 @@ import com.example.demo.dal.interfaces.IBoardDao;
 import com.example.demo.model.Board;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Primitive implementation of a board dao, using a HashMap.
@@ -36,5 +38,11 @@ public class BoardDao implements IBoardDao {
     @Override
     public void deleteBoard(int boardId) {
         boards.remove(boardId);
+    }
+
+    public List<Board> getBoards() {
+        List<Board> result = new ArrayList<>();
+        result.addAll(boards.values());
+        return result;
     }
 }
