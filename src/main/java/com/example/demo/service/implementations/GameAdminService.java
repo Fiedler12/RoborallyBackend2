@@ -8,8 +8,10 @@ import com.example.demo.model.Admin.User;
 import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.service.interfaces.IGameAdminService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +43,17 @@ public class GameAdminService implements IGameAdminService {
             }
         }
         return result;
+    }
+
+    public void createGame() throws ServiceException, DaoException {
+        Board board = new Board(8, 8, "board " + getGames().size() + 1);
+        String[] colors = new String[2];
+        colors[0] = "red";
+        colors[1] = "blue";
+        for (int i = 0; i < 2; i++) {
+            Player player = new Player(board, colors[i], "player " + board.getPlayersNumber() + 1);
+            board.addPlayer(player);
+        }
+        boardDao.createBoard(board);
     }
 }

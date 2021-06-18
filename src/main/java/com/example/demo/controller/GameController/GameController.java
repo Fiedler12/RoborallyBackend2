@@ -8,6 +8,7 @@ import com.example.demo.exceptions.ServiceException;
 import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.model.Space;
+import com.example.demo.service.implementations.GameAdminService;
 import com.example.demo.service.interfaces.IGameService;
 import com.example.demo.util.mapping.DtoMapper;
 import com.example.demo.util.mapping.IDtoMapper;
@@ -23,8 +24,10 @@ import java.util.List;
 public class GameController {
     private final IGameService gameService;
     private final IDtoMapper dtoMapper;
+    private final GameAdminService gameAdminService;
 
-    public GameController(IGameService gameService, IDtoMapper dtoMapper) {
+    public GameController(IGameService gameService, IDtoMapper dtoMapper, GameAdminService gameAdminService) {
+        this.gameAdminService = gameAdminService;
         this.gameService = gameService;
         this.dtoMapper = dtoMapper;
     }
@@ -73,14 +76,19 @@ public class GameController {
      * @param boardDTO, a board dto describing the board we want to create
      * @return id of the newly created board
      */
-    /*
     @PostMapping("/board")
     public ResponseEntity<Integer> createBoard(@RequestBody BoardDto boardDTO) throws ServiceException, DaoException {
         Board board = dtoMapper.convertToEntity(boardDTO);
         int boardId = gameService.saveBoard(board);
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
-    */
+
+    @PostMapping("/newgame")
+    public ResponseEntity<Void> createGame() throws ServiceException, DaoException {
+        gameAdminService.createGame();
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     /**
      * Move the current player
      *
@@ -119,13 +127,6 @@ public class GameController {
     public ResponseEntity<Void> switchPlayer(@PathVariable("boardId") int boardId) throws ServiceException, DaoException {
         gameService.switchCurrentPlayer(boardId);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping("/board")
-    public ResponseEntity<Void> CreateNewGame(@RequestBody BoardDto boardDto) throws ServiceException,DaoException{
-        Board board = dtoMapper.convertToEntity(boardDto);
-        int boardId =gameService.saveBoard(board);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

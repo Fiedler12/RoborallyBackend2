@@ -12,4 +12,6 @@ public interface IGameAdminService {
 
     List<Game> getGames() throws DaoException, ServiceException;
 
+    void createGame() throws ServiceException, DaoException;
+
 }
