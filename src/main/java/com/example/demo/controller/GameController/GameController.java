@@ -73,13 +73,14 @@ public class GameController {
      * @param boardDTO, a board dto describing the board we want to create
      * @return id of the newly created board
      */
+    /*
     @PostMapping("/board")
     public ResponseEntity<Integer> createBoard(@RequestBody BoardDto boardDTO) throws ServiceException, DaoException {
         Board board = dtoMapper.convertToEntity(boardDTO);
         int boardId = gameService.saveBoard(board);
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
-
+    */
     /**
      * Move the current player
      *
@@ -118,6 +119,13 @@ public class GameController {
     public ResponseEntity<Void> switchPlayer(@PathVariable("boardId") int boardId) throws ServiceException, DaoException {
         gameService.switchCurrentPlayer(boardId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/board")
+    public ResponseEntity<Void> CreateNewGame(@RequestBody BoardDto boardDto) throws ServiceException,DaoException{
+        Board board = dtoMapper.convertToEntity(boardDto);
+        int boardId =gameService.saveBoard(board);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
