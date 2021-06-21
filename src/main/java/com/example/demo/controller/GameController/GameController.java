@@ -77,7 +77,7 @@ public class GameController {
      * @return id of the newly created board
      */
     @PostMapping("/board")
-    public ResponseEntity<Integer> createBoard(@RequestBody BoardDto boardDTO, @RequestBody int playernumber) throws ServiceException, DaoException {
+    public ResponseEntity<Integer> createBoard(@RequestBody BoardDto boardDTO) throws ServiceException, DaoException {
         Board board = dtoMapper.convertToEntity(boardDTO);
         int boardId = gameService.saveBoard(board);
         Player player1 = new Player(gameService.getBoard(boardId), "red", "player1");
