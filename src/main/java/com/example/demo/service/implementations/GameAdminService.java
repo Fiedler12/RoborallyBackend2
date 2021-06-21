@@ -18,9 +18,11 @@ import java.util.List;
 @Repository
 public class GameAdminService implements IGameAdminService {
     private final IBoardDao boardDao;
+    private final GameService gameService;
 
-    public GameAdminService(IBoardDao boardDao) {
+    public GameAdminService(IBoardDao boardDao, GameService gameService) {
         this.boardDao = boardDao;
+        this.gameService = gameService;
     }
 
 
@@ -54,6 +56,6 @@ public class GameAdminService implements IGameAdminService {
             Player player = new Player(board, colors[i], "player " + board.getPlayersNumber() + 1);
             board.addPlayer(player);
         }
-        boardDao.createBoard(board);
+        gameService.saveBoard(board);
     }
 }
