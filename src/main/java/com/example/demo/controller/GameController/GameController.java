@@ -59,14 +59,16 @@ public class GameController {
      * Add a player to a board
      *
      * @param boardId   the id of the board we want to add a player to
-     * @param playerDto the player we want to add to the board
      * @return the id of the player we have added
      */
     @PostMapping("/board/{boardId}/player")
-    public ResponseEntity<Integer> addPlayer(@PathVariable("boardId") int boardId, @RequestBody PlayerDto playerDto) throws ServiceException, MappingException, DaoException {
+    public ResponseEntity<Integer> addPlayer(@PathVariable("boardId") int boardId) throws ServiceException, MappingException, DaoException {
         Board board = gameService.getBoard(boardId);
-        Player player = dtoMapper.convertToEntity(playerDto, board);
-        int playerId = gameService.addPlayer(boardId, player);
+        String[] colors = {"red", "blue", "green", "yellow", "magenta", "orange"};
+        Player newPlayer = new Player(board, colors[board.getPlayersNumber()], "Player " + board.getPlayersNumber() + 1);
+        int playerId = gameService.addPlayer(boardId, newPlayer);
+        gameService.setCurrentPlayer(boardId, playerId);
+        gameService.moveCurrentPlayer(boardId, board.getPlayersNumber(), board.getPlayersNumber());
         return new ResponseEntity<>(playerId, HttpStatus.CREATED);
     }
 
@@ -80,14 +82,6 @@ public class GameController {
     public ResponseEntity<Integer> createBoard(@RequestBody BoardDto boardDTO) throws ServiceException, DaoException {
         Board board = dtoMapper.convertToEntity(boardDTO);
         int boardId = gameService.saveBoard(board);
-        Player player1 = new Player(gameService.getBoard(boardId), "red", "player1");
-        Player player2 = new Player(gameService.getBoard(boardId), "blue", "player2");
-        gameService.addPlayer(boardId, player1);
-        gameService.setCurrentPlayer(boardId, player1.getPlayerId());
-        gameService.moveCurrentPlayer(boardId, 1,1);
-        gameService.addPlayer(boardId, player2);
-        gameService.addPlayer(boardId, player2);
-        gameService.movePlayer(board, 4,4, player2.getPlayerId());
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
 
