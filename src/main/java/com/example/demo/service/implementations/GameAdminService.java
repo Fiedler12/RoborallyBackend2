@@ -49,13 +49,6 @@ public class GameAdminService implements IGameAdminService {
 
     public void createGame() throws ServiceException, DaoException {
         Board board = new Board(8, 8, "board " + getGames().size() + 1);
-        String[] colors = new String[2];
-        colors[0] = "red";
-        colors[1] = "blue";
-        for (int i = 0; i < 2; i++) {
-            Player player = new Player(board, colors[i], "player " + board.getPlayersNumber() + 1);
-            board.addPlayer(player);
-        }
         gameService.saveBoard(board);
     }
 }
