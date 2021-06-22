@@ -147,4 +147,14 @@ public class GameService implements IGameService {
         return gameDao.getGames();
     }
 
+    public void deleteBoard(int boardId) throws ServiceException, DaoException {
+        boardDao.deleteBoard(boardId);
+    }
+
+    public void deletePlayer(int boardId, int playerId) throws ServiceException, DaoException {
+        Board board = boardDao.getBoard(boardId);
+        Player player = board.getPlayerById(playerId);
+        board.removePlayer(player);
+    }
+
 }

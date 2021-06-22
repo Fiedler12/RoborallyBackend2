@@ -27,4 +27,9 @@ public interface IGameService {
     void switchCurrentPlayer(int boardId) throws ServiceException, DaoException;
 
     Collection<Board> getGames() throws ServiceException, DaoException;
-}
+
+    void deleteBoard(int boardId) throws ServiceException, DaoException;
+
+    void deletePlayer(int boardId, int playerId) throws ServiceException, DaoException;
+
+    }

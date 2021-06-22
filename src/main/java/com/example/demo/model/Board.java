@@ -135,6 +135,10 @@ public class Board {
         }
     }
 
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
+
     public Phase getPhase() {
         return phase;
     }

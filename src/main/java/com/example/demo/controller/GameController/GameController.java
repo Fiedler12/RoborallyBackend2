@@ -64,7 +64,7 @@ public class GameController {
     @PostMapping("/board/{boardId}/player")
     public ResponseEntity<Integer> addPlayer(@PathVariable("boardId") int boardId) throws ServiceException, MappingException, DaoException {
         Board board = gameService.getBoard(boardId);
-        String[] colors = {"red", "blue", "green", "yellow", "magenta", "orange"};
+        String[] colors = {"red", "blue", "green", "yellow", "blue", "blue"};
         Player newPlayer = new Player(board, colors[board.getPlayersNumber()], "Player " + board.getPlayersNumber() + 1);
         int playerId = gameService.addPlayer(boardId, newPlayer);
         gameService.setCurrentPlayer(boardId, playerId);
@@ -130,5 +130,14 @@ public class GameController {
         gameService.switchCurrentPlayer(boardId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @PutMapping("deleteplayer/{boardID}/{playerID}")
+    public ResponseEntity<Void> deletePlayer (@PathVariable("boardID") int boardId, @PathVariable("playerID") int playerId) throws ServiceException, DaoException {
+        gameService.deletePlayer(boardId, playerId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PutMapping("deleteboard/{boardID}")
+    public ResponseEntity<Void> deleteBoard (@PathVariable("boardID") int boardId) throws ServiceException, DaoException {
+        gameService.deleteBoard(boardId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
