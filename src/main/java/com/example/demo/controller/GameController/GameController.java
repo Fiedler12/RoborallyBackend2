@@ -65,7 +65,7 @@ public class GameController {
     public ResponseEntity<Integer> addPlayer(@PathVariable("boardId") int boardId) throws ServiceException, MappingException, DaoException {
         Board board = gameService.getBoard(boardId);
         String[] colors = {"red", "blue", "green", "yellow", "blue", "blue"};
-        Player newPlayer = new Player(board, colors[board.getPlayersNumber()], "Player " + board.getPlayersNumber() + 1);
+        Player newPlayer = new Player(board, colors[board.getPlayersNumber()], "Player " + board.getPlayersNumber());
         int playerId = gameService.addPlayer(boardId, newPlayer);
         gameService.setCurrentPlayer(boardId, playerId);
         gameService.moveCurrentPlayer(boardId, board.getPlayersNumber(), board.getPlayersNumber());
@@ -83,12 +83,6 @@ public class GameController {
         Board board = dtoMapper.convertToEntity(boardDTO);
         int boardId = gameService.saveBoard(board);
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/newgame")
-    public ResponseEntity<Void> createGame() throws ServiceException, DaoException {
-        gameAdminService.createGame();
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
